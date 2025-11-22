@@ -43,13 +43,17 @@ function App() {
         }
     }
     const addContributor = async ()=>{
+      console.log("1")
       if(selectedBoard){
+        console.log("2")
         const response = await api('addContributor','POST',{
           email:isLoggedIn,
           board_id:selectedBoard._id,
           contributor_email:inviteEmail
         });
+        console.log("3",response)
         if(response.success===true){
+          console.log("3",response)
           toast.success("Contributor Added Successfully");
           setInviteEmail("");
           setInvite(false);
