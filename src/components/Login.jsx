@@ -7,6 +7,19 @@ export default function Login({ setIsLoggedIn,toastNotify }) {
 	const [password, setPassword] = useState("");
 	const [isSignUp, setIsSignUp] = useState(false);
 
+	const dummyLogin = async(e) => {
+		e.preventDefault();
+		const response = await api('login','POST',{
+			email:"user@test.com",
+			password:"12345"
+		})
+		if(response.success===true){
+			toastNotify.success("Login Successful");
+			setIsLoggedIn(response.email);
+		}else{
+			alert(response.message);
+		}
+	}
 
 	const loginOrSignUp = async(e) => {
 		e.preventDefault();
@@ -55,7 +68,7 @@ export default function Login({ setIsLoggedIn,toastNotify }) {
 				<label className="text-2xl text-left mb-4">Password</label>
 				<input required type="password" value={password} onChange={(e)=>setPassword(e.target.value)}placeholder="Password" className="p-4 rounded-lg border border-gray-300 mb-8"/>
 				<button type="submit" className="mt-8 p-4 rounded-lg bg-blue-500 text-white font-semibold hover:bg-blue-600 transition duration-300">{isSignUp?"Signup":"Login"}</button>
-				<button className="mt-8 p-4 rounded-lg bg-blue-400 text-white font-semibold hover:bg-blue-600 transition duration-300">Login with dummy credentials</button>
+				<button type="button" onClick={(e)=>dummyLogin(e)} className="mt-8 p-4 rounded-lg bg-blue-400 text-white font-semibold hover:bg-blue-600 transition duration-300">Login with dummy credentials</button>
 				<button type="button" onClick={()=>setIsSignUp(!isSignUp)} className="mt-8 p-4 rounded-lg bg-blue-400 text-white font-semibold hover:bg-blue-600 transition duration-300">{isSignUp?"Login":"Signup"}</button>
 			</form>
 		</div>
