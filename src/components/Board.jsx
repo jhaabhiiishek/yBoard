@@ -207,8 +207,8 @@ export function Board({selectedBoard,setSelectedBoard, boardList, setBoardList, 
 		});
 	}
 
-	const getSuggestions=()=>{
-		api('getRecommendations','POST',{
+	const getSuggestions= async()=>{
+		await api('getRecommendations','POST',{
 			email:user,
 			board_id:selectedBoard._id,
 			card_id:showModal._id
