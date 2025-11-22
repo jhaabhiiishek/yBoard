@@ -346,8 +346,11 @@ export function Board({selectedBoard,setSelectedBoard, boardList, setBoardList, 
 						board_id:selectedBoard._id,
 						card_id:showModal._id
 					}).then((response)=>{
-						console.log(response);
-						toastNotify.info(response.suggestions, {position: "bottom-right",autoClose: 3000,hideProgressBar: false,closeOnClick: true,pauseOnHover: true,draggable: true,progress: undefined,theme: "light"})
+						if(response.suggestions.length>0){
+							toastNotify.info(response.suggestions, {position: "bottom-right",autoClose: 3000,hideProgressBar: false,closeOnClick: true,pauseOnHover: true,draggable: true,progress: undefined,theme: "light"})
+						}else{
+							toastNotify.info("No suggestions available", {position: "bottom-right",autoClose: 3000,hideProgressBar: false,closeOnClick: true,pauseOnHover: true,draggable: true,progress: undefined,theme: "light"})
+						}
 					});
 					}}>Get Suggestions</div>
 					<p className="mb-2">Description:{ editModal ? <input type="text" value={description}  className="border-b p-1 ml-2 rounded-md dotted"  onChange={(e)=>setDescription(e.target.value)} /> : showModal.description}</p>
