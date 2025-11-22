@@ -1,5 +1,5 @@
 export default async (endpoint,type,params)=>{
-	let link = 'https://yboardbackend.onrender.com'+endpoint;
+	let link = 'https://yboardbackend.onrender.com/'+endpoint;
 	const response = await fetch(link,{
           method: type,
           headers: {
