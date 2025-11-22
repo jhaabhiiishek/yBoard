@@ -43,7 +43,7 @@ function App() {
         }
     }
     const addContributor = async ()=>{
-      console.log("1")
+      toast.info("Adding Contributor...", {position: "bottom-right",autoClose: 3000,hideProgressBar: false,closeOnClick: true,pauseOnHover: true,draggable: true,progress: undefined,theme: "light"})
       if(selectedBoard){
         console.log("2")
         const response = await api('addContributor','POST',{
