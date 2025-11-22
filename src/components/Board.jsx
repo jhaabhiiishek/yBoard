@@ -346,8 +346,9 @@ export function Board({selectedBoard,setSelectedBoard, boardList, setBoardList, 
 						board_id:selectedBoard._id,
 						card_id:showModal._id
 					}).then((response)=>{
+						console.log(response);
 						toastNotify.info(response.suggestions, {position: "bottom-right",autoClose: 3000,hideProgressBar: false,closeOnClick: true,pauseOnHover: true,draggable: true,progress: undefined,theme: "light"})
-					});console.log("Done");
+					});
 					}}>Get Suggestions</div>
 					<p className="mb-2">Description:{ editModal ? <input type="text" value={description}  className="border-b p-1 ml-2 rounded-md dotted"  onChange={(e)=>setDescription(e.target.value)} /> : showModal.description}</p>
 					<p>Updated At :{new Date(showModal.updated_at).toLocaleString()}</p>
