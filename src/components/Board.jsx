@@ -34,7 +34,6 @@ export function Board({selectedBoard,setSelectedBoard, boardList, setBoardList, 
 				});
 				if(data.success===true&&cardsData.success===true){
 					const formattedLists = data.lists.map((list)=>{
-						console.log("Fetched Cards ---------:", list);
 						return {
 							_id: list._id,
 							name: list.list_name,
@@ -43,7 +42,6 @@ export function Board({selectedBoard,setSelectedBoard, boardList, setBoardList, 
 						}
 					}
 					);
-					console.log("Fetched Lists ---------:", formattedLists);
 					setLists(formattedLists);
 				}
 			}
@@ -68,8 +66,6 @@ export function Board({selectedBoard,setSelectedBoard, boardList, setBoardList, 
 					});
 					if(data.success===true&&cardsData.success===true){
 						const formattedLists = data.lists.map((list)=>{
-							console.log("Fetched Cards ---------:", list);
-
 							return {
 								_id: list._id,
 
@@ -78,7 +74,6 @@ export function Board({selectedBoard,setSelectedBoard, boardList, setBoardList, 
 								board: selectedBoard._id
 							}}
 						);
-						console.log("Fetched Lists ---------:", formattedLists);
 
 						setLists(formattedLists);
 					}
@@ -87,7 +82,7 @@ export function Board({selectedBoard,setSelectedBoard, boardList, setBoardList, 
 			})
 	
 			socket.on('receive_card_update', (data) => {
-				console.log("Received card update via WebSocket:", data);
+				// console.log("Received card update via WebSocket:", data);
 				setLists(prevLists =>
 					prevLists.map(list => ({
 						...list,
@@ -108,7 +103,7 @@ export function Board({selectedBoard,setSelectedBoard, boardList, setBoardList, 
 	
 			});
 			socket.on('receive_update',(data)=>{
-				console.log("Received board update via WebSocket:", data);
+				// console.log("Received board update via WebSocket:", data);
 				if(selectedBoard._id===data._id){
 					setSelectedBoard({
 						...selectedBoard,
@@ -124,7 +119,7 @@ export function Board({selectedBoard,setSelectedBoard, boardList, setBoardList, 
 				}
 			})
 			socket.on('listNameUpdated', (data) => {
-				console.log("Received list name update via WebSocket:", data);
+				// console.log("Received list name update via WebSocket:", data);
 				setLists(prevLists =>
 					prevLists.map(list =>
 						list._id === data.list_id
@@ -134,7 +129,7 @@ export function Board({selectedBoard,setSelectedBoard, boardList, setBoardList, 
 				);
 			});
 			socket.on('card_created', (data) => {
-				console.log("Received card update via WebSocket:", data);
+				// console.log("Received card update via WebSocket:", data);
 				setLists(prevLists =>
 					prevLists.map(list => {
 						if (list._id === data.list_id) {
@@ -149,12 +144,12 @@ export function Board({selectedBoard,setSelectedBoard, boardList, setBoardList, 
 			});
 
 			socket.on('list_created', (data) => {
-				console.log("Received list update via WebSocket:", data);
+				// console.log("Received list update via WebSocket:", data);
 				setLists(prevLists => [...prevLists, data]);
 			});
 	
 			socket.on('board_update', (data) => {
-				console.log("Received board update via WebSocket:", data);
+				// console.log("Received board update via WebSocket:", data);
 				if(data.update_type==='board_rename'){
 					if(selectedBoard._id===data.board_id){
 						setSelectedBoard({
@@ -193,7 +188,7 @@ export function Board({selectedBoard,setSelectedBoard, boardList, setBoardList, 
 			board_id:selectedBoard._id,
 			list_name:`List ${lists.length + 1}`
 		}).then((response)=>{
-			console.log(response);
+			// console.log(response);
 			if(response.success===true){
 				const newList = {
 					_id: response.list_id,
@@ -232,14 +227,14 @@ export function Board({selectedBoard,setSelectedBoard, boardList, setBoardList, 
 							board_id:selectedBoard._id,
 							new_board_name:newBoardName
 						}).then((response)=>{
-							console.log(response);
+							// console.log(response);
 							if(response.success===true){
 								boardList.forEach((board)=>{
 									if(board._id===selectedBoard._id){
 										board.board_name=newBoardName;
 									}
 								});
-								console.log("Emitting board rename via WebSocket------------------", response.board);
+								// console.log("Emitting board rename via WebSocket------------------", response.board);
 								socket.emit('send_update',response.board);
 								setSelectedBoard({
 									...selectedBoard,
@@ -258,7 +253,7 @@ export function Board({selectedBoard,setSelectedBoard, boardList, setBoardList, 
 			</div>
 			<div className="flex h-full flex-row overflow-auto">
 				{lists && lists.map((listData,index)=>{
-					console.log("Rendering List Component for -----listData:", listData);
+					// console.log("Rendering List Component for -----listData:", listData);
 					if(listData&& listData.board === selectedBoard._id){
 						return(
 							<List key={index} setShowModal={setShowModal} user={user} list_id={listData._id} listname={listData.name} listcards={listData.cards} setLists={setLists} listboard={selectedBoard._id}/>
@@ -313,7 +308,7 @@ export function Board({selectedBoard,setSelectedBoard, boardList, setBoardList, 
 									new_type:type,
 
 								}).then((response)=>{
-									console.log(response);
+									// console.log(response);
 									if(response.success===true){
 										setShowModal({
 											...showModal,
@@ -346,7 +341,7 @@ export function Board({selectedBoard,setSelectedBoard, boardList, setBoardList, 
 										});
 										socket.emit('send_card_update',response.card);
 										setLists(updatedLists);
-										console.log("Updated Lists after card edit:", updatedLists);
+										// console.log("Updated Lists after card edit:", updatedLists);
 										// setLists(
 										// lists
 									;}

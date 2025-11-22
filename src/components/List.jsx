@@ -11,7 +11,7 @@ export function List({listname,user,setLists,listcards ,list_id,setShowModal,lis
 	// const [dragging, setDragging] = useState();
 
 	const handleDragStart = (e) => {
-		console.log("Dragging card:", e.target);
+		// console.log("Dragging card:", e.target);
 		e.dataTransfer.setData('card_id',e.target.id);
 	};
 	const dragOver = (e) => {
@@ -22,7 +22,7 @@ export function List({listname,user,setLists,listcards ,list_id,setShowModal,lis
 		const cardId = e.dataTransfer.getData("card_id");
 		const alreadyHere = cards.some(c => c._id === cardId);
 		if (alreadyHere) return;
-		console.log("calling bckend")
+		// console.log("calling bckend")
 		const response = await api("getCard", "POST", {
 			email: user,
 			card_id: cardId
@@ -36,7 +36,7 @@ export function List({listname,user,setLists,listcards ,list_id,setShowModal,lis
 		// Update UI
 		if(response.card.list_id===list_id){
 			setCards(prev => [...prev, response.card]);
-			console.log("Dropped card:", cards);
+			// console.log("Dropped card:", cards);
 		}
 	}
 	// const onDragEnter = (e, group) => {
@@ -60,9 +60,9 @@ export function List({listname,user,setLists,listcards ,list_id,setShowModal,lis
 				list_id:selectedCard,
 				type:"task"
 			}).then((response)=>{
-				console.log(response);
+				// console.log(response);
 				if(response.success===true){
-					console.log(setNewCard.trim());
+					// console.log(setNewCard.trim());
 					const newCard = { _id: response.card_id, card_name: setNewCard.trim() };
 					setCards([...cards, newCard]);
 					changeSetNewCard("");
@@ -107,7 +107,7 @@ export function List({listname,user,setLists,listcards ,list_id,setShowModal,lis
 							list_id:list_id,
 							new_list_name:newListName
 						}).then((response)=>{
-							console.log(response);
+							// console.log(response);
 							if(response.success===true){
 								setLists((prevLists) =>
 									prevLists.map((lst) =>
@@ -132,7 +132,7 @@ export function List({listname,user,setLists,listcards ,list_id,setShowModal,lis
 			</div>
 			<p className="pt-2 pb-0 "></p>
 			{cards.map((card)=>{
-				console.log("Rendering Card:", card);
+				// console.log("Rendering Card:", card);
 				if(card){
 					return(
 						<div draggable={true} onClick={()=>setShowModal(card)} key={card._id} id={card._id} onDragStart={(e) => handleDragStart(e)} className="p-2 mb-2 border rounded-lg">

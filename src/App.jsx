@@ -19,7 +19,6 @@ function App() {
     if(isLoggedIn!=""){
       const fetchBoards = async ()=>{
         const data = await api('getBoards','POST',{email:isLoggedIn});
-        console.log(data)
         if(data.success===true){
           setBoardList(data.boards);
         }   
@@ -39,7 +38,6 @@ function App() {
           email:isLoggedIn,
           board_name:`Board ${boardList.length + 1}`
         });
-        console.log(response)
         if(response.success===true){
           setBoardList([...boardList, response.board]);
         }
