@@ -4,6 +4,7 @@ import './App.css'
 import Login from './components/Login';
 import { Board } from './components/Board';
 import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import Cookies from 'js-cookie';
 import api from './components/api';
 
@@ -43,7 +44,7 @@ function App() {
       }
     }
     const addContributor = async () => {
-      toast.info("Adding Contributor...", { position: "bottom-right", autoClose: 3000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "light" })
+      toast.info("Adding Contributor...", { position: "bottom-right", autoClose: 3000, hideProgressBar: false, closeOnClick: true, pauseOnHover: true, draggable: true, progress: undefined, theme: "dark" })
       if (selectedBoard) {
         console.log("2")
         const response = await api('addContributor', 'POST', {
@@ -110,7 +111,7 @@ function App() {
             </div>
           </div>
         </div>
-        <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="light" />
+        <ToastContainer position="bottom-right" autoClose={3000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover theme="dark" />
       </div>
     )
   }
