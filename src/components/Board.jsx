@@ -191,6 +191,7 @@ export function Board({ selectedBoard, setSelectedBoard, boardList, setBoardList
 		}).then((response) => {
 			// console.log(response);
 			if (response.success === true) {
+				toastNotify.success("List Created Successfully!");
 				const newList = {
 					_id: response.list_id,
 					name: `List ${lists.length + 1}`,
@@ -199,6 +200,8 @@ export function Board({ selectedBoard, setSelectedBoard, boardList, setBoardList
 				};
 				setLists([...lists, newList]);
 				socket.emit('list_create', newList);
+			} else {
+				toastNotify.error("Failed to create list");
 			}
 		});
 	}
@@ -208,7 +211,7 @@ export function Board({ selectedBoard, setSelectedBoard, boardList, setBoardList
 			<div className="flex flex-row items-center justify-between text-xl pb-3">
 				<h2>{boardNameEdit ? <input type="text" value={newBoardName} onChange={(e) => {
 					setNewBoardName(e.target.value);
-				}} /> : selectedBoard.board_name}</h2>
+				}} className="border-b" /> : selectedBoard.board_name}</h2>
 				<p>{activeMembers} other active members</p>
 				<div onClick={() => {
 					if (boardNameEdit) {
@@ -220,6 +223,7 @@ export function Board({ selectedBoard, setSelectedBoard, boardList, setBoardList
 						}).then((response) => {
 							// console.log(response);
 							if (response.success === true) {
+								toastNotify.success("Board Renamed Successfully!");
 								boardList.forEach((board) => {
 									if (board._id === selectedBoard._id) {
 										board.board_name = newBoardName;
@@ -233,12 +237,14 @@ export function Board({ selectedBoard, setSelectedBoard, boardList, setBoardList
 								});
 
 								setBoardList([...boardList]);
+							} else {
+								toastNotify.error("Failed to rename board");
 							}
 						})
 					}
 
 					setBoardNameEdit(!boardNameEdit)
-				}} >
+				}} className="cursor-pointer hover:bg-gray-100 p-2 rounded" >
 					{boardNameEdit ? "Save" : "Edit"}
 				</div>
 			</div>
@@ -247,7 +253,7 @@ export function Board({ selectedBoard, setSelectedBoard, boardList, setBoardList
 					// console.log("Rendering List Component for -----listData:", listData);
 					if (listData && listData.board === selectedBoard._id) {
 						return (
-							<List key={index} setShowModal={setShowModal} user={user} list_id={listData._id} listname={listData.name} listcards={listData.cards} setLists={setLists} listboard={selectedBoard._id} />
+							<List key={index} toastNotify={toastNotify} setShowModal={setShowModal} user={user} list_id={listData._id} listname={listData.name} listcards={listData.cards} setLists={setLists} listboard={selectedBoard._id} />
 						)
 					}
 				})}
